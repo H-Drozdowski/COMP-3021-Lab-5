@@ -528,12 +528,12 @@ def node_rename(node_id):
     if not node:
         flash('Node not found.', 'error')
         return redirect(url_for('directory'))
-    
+
+    if node['owner_id'] != current['user_id'] and current['role'] != 'sysop':
+        flash('Access denied.', 'error')
+        return redirect(url_for('directory'))
+
     if request.method == 'GET':
-        if node['owner_id'] != current['user_id'] and current['role'] != 'sysop':
-            flash('Access denied.', 'error')
-            return redirect(url_for('directory'))
-        
         return render_template('node_rename.html', node=node, current_user=current)
 
     
@@ -573,6 +573,7 @@ def node_delete(node_id):
         node_repo.delete(node_id)
         flash('Node removed from registry.')
         return redirect(url_for('directory'))
+    
     return render_template('node_delete_confirm.html', node=node, current_user=current)
 
 
