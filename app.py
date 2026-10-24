@@ -533,7 +533,10 @@ def node_rename(node_id):
         if node['owner_id'] != current['user_id'] and current['role'] != 'sysop':
             flash('Access denied.', 'error')
             return redirect(url_for('directory'))
+        
         return render_template('node_rename.html', node=node, current_user=current)
+
+    
     node_repo.rename(node_id, request.form.get('name', node['name']))
     flash('Node renamed.')
     return redirect(url_for('node_view', node_id=node_id))
@@ -554,12 +557,18 @@ def node_delete(node_id):
         node_id -- the integer primary key of the node from the URL
     """
     current = get_current_user(request)
+
     if not current:
         return redirect(url_for('login'))
     node = node_repo.find_by_id(node_id)
+
+    if node["owner_id"] != current["user_id"]:
+        return redirect(url_for('index'))
+
     if not node:
         flash('Node not found.', 'error')
         return redirect(url_for('directory'))
+    
     if request.method == 'POST':
         node_repo.delete(node_id)
         flash('Node removed from registry.')
