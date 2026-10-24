@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="panel">
+  <div class="panel-title">EDIT NODE</div>
+  <form method="POST" action="{{ url_for('node_edit', node_id=node.id) }}">
+    <input type="hidden" name="owner_id" value="{{ node.owner_id }}">
+    <div class="form-group">
+      <label>NODE NAME</label>
+      <input type="text" name="name" value="{{ node.name }}" autocomplete="off">
+    </div>
+    <div class="form-group">
+      <label>PHONE</label>
+      <input type="text" name="phone" value="{{ node.phone }}" autocomplete="off">
+    </div>
+    <div class="form-group">
+      <label>REGION</label>
+      <input type="text" name="region" value="{{ node.region }}" autocomplete="off">
+    </div>
+    <div class="form-group">
+      <label>DESCRIPTION</label>
+      <textarea name="description" rows="3">{{ node.description }}</textarea>
+    </div>
+    <div class="btn-row">
+      <button type="submit" class="btn">SAVE CHANGES</button>
+      <a href="{{ url_for('node_view', node_id=node.id) }}" class="btn">CANCEL</a>
+    </div>
+  </form>
+</div>
+{% endblock %}

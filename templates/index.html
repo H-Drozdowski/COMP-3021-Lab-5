@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="panel">
+  <div class="panel-title">WHAT IS FIDONET</div>
+  <p class="history-blurb">
+    Before the public internet, thousands of dial-up Bulletin Board Systems formed a grassroots
+    global network. FidoNet, established in 1984 by Tom Jennings, connected these systems by
+    having them call each other overnight to exchange messages and files. Each BBS was a node
+    with a phone number, a sysop, and a region designation. Sysops registered their nodes in a
+    shared directory called the Nodelist, published weekly and distributed across the network.
+    At its peak in the early 1990s, FidoNet connected over 30,000 nodes worldwide.
+    This system is that directory.
+  </p>
+</div>
+
+<div class="panel">
+  <div class="panel-title">REGISTERED NODES</div>
+  {% if recent_nodes %}
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>NODE NAME</th>
+          <th>REGION</th>
+          <th>SYSOP</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for node in recent_nodes %}
+        <tr>
+          <td class="name"><a href="{{ url_for('node_view', node_id=node.id) }}">{{ node.name }}</a></td>
+          <td class="meta">{{ node.region }}</td>
+          <td class="meta">{{ node.owner_username }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p style="color:var(--grey);">NO NODES REGISTERED.</p>
+  {% endif %}
+</div>
+
+{% endblock %}

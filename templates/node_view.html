@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="panel">
+  <div class="panel-title">NODE RECORD</div>
+  <div class="node-detail"><span class="label">NAME &nbsp;&nbsp;&nbsp;&nbsp; </span><span class="value">{{ node.name }}</span></div>
+  <div class="node-detail"><span class="label">PHONE &nbsp;&nbsp;&nbsp; </span><span class="value">{{ node.phone }}</span></div>
+  <div class="node-detail"><span class="label">REGION &nbsp;&nbsp; </span><span class="value">{{ node.region }}</span></div>
+  <div class="node-detail"><span class="label">SYSOP &nbsp;&nbsp;&nbsp; </span><span class="value"><a href="{{ url_for('profile', user_id=node.owner_id) }}">{{ node.owner_username }}</a></span></div>
+  <div class="node-detail" style="margin-top:10px;"><span class="label">DESCRIPTION</span><br><span class="value" style="color:var(--grey);">{{ node.description }}</span></div>
+
+  {% if current_user %}
+  <div class="btn-row" style="margin-top:18px;">
+    <a href="{{ url_for('node_edit', node_id=node.id) }}" class="btn">EDIT NODE</a>
+    <a href="{{ url_for('node_delete', node_id=node.id) }}" class="btn btn-danger">DELETE</a>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

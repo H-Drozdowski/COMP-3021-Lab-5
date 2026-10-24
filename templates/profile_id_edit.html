@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="panel">
+  <div class="panel-title">EDIT PROFILE -- {{ user.username }}</div>
+  <form method="POST">
+    <div class="form-group">
+      <label>REGION</label>
+      <input type="text" name="region" value="{{ user.region }}" autocomplete="off">
+    </div>
+    <div class="btn-row">
+      <button type="submit" class="btn">SAVE</button>
+      <a href="{{ url_for('profile', user_id=user.id) }}" class="btn">CANCEL</a>
+    </div>
+  </form>
+</div>
+{% endblock %}

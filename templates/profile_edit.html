@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="panel">
+  <div class="panel-title">EDIT PROFILE</div>
+  <form method="POST" action="{{ url_for('profile_edit') }}">
+    <div class="form-group">
+      <label>REGION</label>
+      <input type="text" name="region" value="{{ user.region }}" autocomplete="off">
+    </div>
+    <div class="btn-row">
+      <button type="submit" class="btn">SAVE</button>
+    </div>
+  </form>
+</div>
+{% endblock %}

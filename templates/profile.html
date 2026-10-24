@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="panel">
+  <div class="panel-title">SYSOP PROFILE</div>
+  <div class="node-detail"><span class="label">USERNAME </span><span class="value">{{ viewed_user.username }}</span></div>
+  <div class="node-detail"><span class="label">ROLE &nbsp;&nbsp;&nbsp;&nbsp; </span><span class="value" style="color:var(--amber);">{{ viewed_user.role }}</span></div>
+  <div class="node-detail"><span class="label">REGION &nbsp;&nbsp; </span><span class="value">{{ viewed_user.region }}</span></div>
+  <div class="node-detail"><span class="label">JOINED &nbsp;&nbsp; </span><span class="value">{{ viewed_user.joined }}</span></div>
+
+  {% if node %}
+  <div style="margin-top:18px;">
+    <div class="panel-title">REGISTERED NODE</div>
+    <div class="node-detail"><span class="label">NAME &nbsp; </span><span class="value"><a href="{{ url_for('node_view', node_id=node.id) }}">{{ node.name }}</a></span></div>
+    <div class="node-detail"><span class="label">PHONE </span><span class="value">{{ node.phone }}</span></div>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

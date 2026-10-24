@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="panel">
+  <div class="panel-title">NODE DIRECTORY</div>
+  {% if nodes %}
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>NODE NAME</th>
+          <th>PHONE</th>
+          <th>REGION</th>
+          <th>SYSOP</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for node in nodes %}
+        <tr>
+          <td class="name"><a href="{{ url_for('node_view', node_id=node.id) }}">{{ node.name }}</a></td>
+          <td class="phone">{{ node.phone }}</td>
+          <td class="meta">{{ node.region }}</td>
+          <td class="meta">{{ node.owner_username }}</td>
+          <td class="meta">
+            {% if current_user %}
+              <a href="{{ url_for('node_view', node_id=node.id) }}">VIEW</a>
+            {% endif %}
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p style="color:var(--grey);">NO NODES REGISTERED.</p>
+  {% endif %}
+</div>
+{% endblock %}

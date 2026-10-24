@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FIDONET NODE DIRECTORY</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+<div class="page-wrap">
+
+  <header class="site-header">
+    <div class="site-title">FIDONET NODE REGISTRY<span class="blink">_</span></div>
+    <div class="site-sub">*** ZONE COORDINATOR SYSTEM -- AUTHORIZED SYSOPS ONLY ***</div>
+    <nav class="site-nav">
+      <a href="{{ url_for('index') }}">HOME</a>
+      <a href="{{ url_for('directory') }}">NODE DIRECTORY</a>
+      {% if current_user %}
+        <a href="{{ url_for('profile', user_id=current_user.user_id) }}">MY PROFILE</a>
+        <a href="{{ url_for('profile_edit') }}">EDIT PROFILE</a>
+        {% if current_user.role == 'sysop' %}
+          <a href="{{ url_for('sysop') }}">SYSOP PANEL</a>
+        {% endif %}
+        <a href="{{ url_for('logout') }}">LOGOUT</a>
+        <span class="nav-handle">[{{ current_user.username }}]</span>
+      {% else %}
+        <a href="{{ url_for('login') }}">LOGIN</a>
+        <a href="{{ url_for('register') }}">REGISTER</a>
+      {% endif %}
+    </nav>
+  </header>
+
+  <main>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% for category, message in messages %}
+        <div class="flash {{ category }}">{{ message }}</div>
+      {% endfor %}
+    {% endwith %}
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="site-footer">
+    FIDONET NODE REGISTRY -- FOR EDUCATIONAL USE ONLY
+  </footer>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="panel">
+  <div class="panel-title">SYSOP PANEL -- ALL USERS</div>
+  <table class="data-table">
+    <thead>
+      <tr><th>USERNAME</th><th>ROLE</th><th>REGION</th><th>JOINED</th></tr>
+    </thead>
+    <tbody>
+      {% for u in users %}
+      <tr>
+        <td class="name"><a href="{{ url_for('profile', user_id=u.id) }}">{{ u.username }}</a></td>
+        <td class="meta">{{ u.role }}</td>
+        <td class="meta">{{ u.region }}</td>
+        <td class="meta">{{ u.joined }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<div class="panel">
+  <div class="panel-title">ALL NODES</div>
+  <table class="data-table">
+    <thead>
+      <tr><th>NODE NAME</th><th>SYSOP</th><th>REGION</th><th></th></tr>
+    </thead>
+    <tbody>
+      {% for node in nodes %}
+      <tr>
+        <td class="name">{{ node.name }}</td>
+        <td class="meta">{{ node.owner_username }}</td>
+        <td class="meta">{{ node.region }}</td>
+        <td class="meta"><a href="{{ url_for('node_delete', node_id=node.id) }}">REMOVE</a></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

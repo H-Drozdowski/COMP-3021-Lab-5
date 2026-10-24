@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="panel">
+  <div class="panel-title">CONFIRM NODE REMOVAL</div>
+  <p style="margin-bottom:16px;">Remove node <span style="color:var(--green);">{{ node.name }}</span> from the registry?</p>
+  <form method="POST" action="{{ url_for('node_delete', node_id=node.id) }}">
+    <div class="btn-row">
+      <button type="submit" class="btn btn-danger">CONFIRM REMOVE</button>
+      <a href="{{ url_for('node_view', node_id=node.id) }}" class="btn">CANCEL</a>
+    </div>
+  </form>
+</div>
+{% endblock %}
