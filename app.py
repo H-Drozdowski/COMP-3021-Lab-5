@@ -48,6 +48,7 @@ def get_current_user(req):
     token = req.cookies.get('bbs_token')
     if not token:
         return None
+    
     return sessions.get(token)
 
 
@@ -563,7 +564,6 @@ def node_delete(node_id):
 def profile(user_id):
     """
     Render the profile page for a user.
-
     Redirects to login if the user is not logged in.
     Redirects to the home page with an error if the user does not exist.
     Passes the viewed user, their node, and the current user to the template.
@@ -574,10 +574,17 @@ def profile(user_id):
     current = get_current_user(request)
     if not current:
         return redirect(url_for('login'))
+    
     user = user_repo.find_by_id(user_id)
+
     if not user:
         flash('User not found.', 'error')
         return redirect(url_for('index'))
+
+    # If the input user ID != to the session user ID they are redirected back to index.html
+    if user_id != current['user_id']:
+        return redirect(url_for('index'))
+    
     node = node_repo.find_by_owner(user_id)
     return render_template('profile.html', viewed_user=user, node=node, current_user=current)
 
