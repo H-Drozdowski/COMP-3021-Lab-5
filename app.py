@@ -28,7 +28,7 @@ def create_session(user_id, username, role):
         username -- the user's username string
         role     -- the user's role string, either 'user' or 'sysop'
     """
-    
+
     token = str(secrets.token_hex(32))
     sessions[token] = {'user_id': user_id, 'username': username, 'role': role}
     return token
@@ -582,7 +582,7 @@ def profile(user_id):
         return redirect(url_for('index'))
 
     # If the input user ID != to the session user ID they are redirected back to index.html
-    if user_id != current['user_id']:
+    if current['role'] != "sysop" and user_id != current['user_id']:
         return redirect(url_for('index'))
     
     node = node_repo.find_by_owner(user_id)
@@ -656,7 +656,6 @@ def sysop():
     all_users = user_repo.get_all()
     all_nodes = node_repo.get_all()
     return render_template('sysop.html', users=all_users, nodes=all_nodes, current_user=current)
-
 
 if __name__ == '__main__':
     initialise_database()
