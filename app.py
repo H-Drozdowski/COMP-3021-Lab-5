@@ -480,10 +480,12 @@ def node_edit(node_id):
     current = get_current_user(request)
     if not current:
         return redirect(url_for('login'))
+    
     node = node_repo.find_by_id(node_id)
     if not node:
         flash('Node not found.', 'error')
         return redirect(url_for('directory'))
+    
     if request.method == 'POST':
         submitted_owner_id = int(request.form.get('owner_id', 0))
         if submitted_owner_id != current['user_id']:
@@ -498,7 +500,10 @@ def node_edit(node_id):
         )
         flash('Node updated.')
         return redirect(url_for('node_view', node_id=node_id))
-    return render_template('node_edit_b.html', node=node, current_user=current)
+
+    # Changed this because no accounts were able to edit since it referenced an html file that 
+    # wasn't in the template
+    return render_template('node_edit.html', node=node, current_user=current)
 
 
 @app.route('/node/<int:node_id>/rename', methods=['GET', 'POST'])
@@ -519,9 +524,11 @@ def node_rename(node_id):
     if not current:
         return redirect(url_for('login'))
     node = node_repo.find_by_id(node_id)
+
     if not node:
         flash('Node not found.', 'error')
         return redirect(url_for('directory'))
+    
     if request.method == 'GET':
         if node['owner_id'] != current['user_id'] and current['role'] != 'sysop':
             flash('Access denied.', 'error')
