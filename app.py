@@ -606,6 +606,10 @@ def profile_by_id_edit(user_id):
     current = get_current_user(request)
     if not current:
         return redirect(url_for('login'))
+
+    if user_id != current["user_id"]:
+        return redirect(url_for('index'))
+
     user = user_repo.find_by_id(user_id)
     if not user:
         flash('User not found.', 'error')
